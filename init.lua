@@ -621,6 +621,27 @@ require('lazy').setup({
           end,
         },
       }
+
+      local lspconfig = require 'lspconfig'
+
+      lspconfig.html.setup {
+        filetypes = { 'html', 'templ' },
+      }
+
+      lspconfig.htmx.setup {
+        filetypes = { 'html', 'templ' },
+      }
+
+      lspconfig.tailwindcss.setup {
+        filetypes = { 'css', 'templ', 'astro', 'javascript', 'typescript', 'react' },
+        settings = {
+          tailwindCSS = {
+            includeLanguages = {
+              templ = 'html',
+            },
+          },
+        },
+      }
     end,
   },
 
