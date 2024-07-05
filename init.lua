@@ -155,11 +155,6 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- Personal options
-vim.opt.tw = 80
-vim.opt.wrap = true
-vim.opt.guicursor = 'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50\z
-                    ,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor\z
-                    ,sm:block-blinkwait175-blinkoff150-blinkon175'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -686,12 +681,13 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+              require('luasnip.loaders.from_snipmate').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -781,32 +777,19 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'ellisonleao/gruvbox.nvim',
-    config = true,
+    'sainnhe/gruvbox-material',
     priority = 1000,
-    init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'gruvbox'
-
-      -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
+    lazy = false,
+    config = function()
+      -- Optionally configure and load the colorscheme
+      -- directly inside the plugin declaration.
+      vim.o.termguicolors = true
+      vim.g.gruvbox_material_enable_italic = true
+      vim.g.gruvbox_material_foreground = 'material'
+      vim.g.gruvbox_material_transparent_background = 1
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
-    opts = function()
-      local colors = require('gruvbox').palette
-      return {
-        transparent_mode = true,
-        overrides = {
-          Cursor = { fg = colors.bright_orange, bg = colors.dark0 },
-          DiffviewDiffAddAsDelete = { bg = '#431313' },
-          DiffAdd = { bg = '#142a03' },
-          DiffChange = { bg = colors.dark1, fg = colors.light1 },
-          DiffText = { bg = '#4D520D' },
-        },
-        contrast = 'soft',
-      }
-    end,
+    opts = {},
   },
 
   -- Highlight todo, notes, etc in comments
@@ -828,8 +811,21 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      require('mini.surround').setup {
+        mappings = {
+          add = '<C-s>a',
+          delete = '<C-s>d',
+          find = '<C-s>f', -- Find surrounding (to the right)
+          find_left = '<C-s>F', -- Find surrounding (to the left)
+          highlight = '<C-s>h', -- Highlight surrounding
+          replace = '<C-s>r', -- Replace surrounding
+          update_n_lines = '<C-s>n', -- Update `n_lines`
 
+          suffix_last = 'l', -- Suffix to search with "prev" method
+          suffix_next = 'n', -- Suffix to search with "next" method
+        },
+      }
+      require('mini.notify').setup()
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
