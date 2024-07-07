@@ -6,3 +6,4 @@ vim.opt.guicursor = 'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50\z
 vim.o.background = 'dark'
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
+vim.cmd 'colorscheme kanagawa-dragon'
