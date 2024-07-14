@@ -6,14 +6,9 @@ vim.opt.guicursor = 'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50\z
 vim.o.background = 'dark'
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
-<<<<<<< HEAD
-
 if vim.fn.bufwinnr(1) then
   vim.keymap.set('n', '-', '<cmd>resize -5<cr>')
   vim.keymap.set('n', '+', '<cmd>resize +5<cr>')
   vim.keymap.set('n', '>', '<cmd>vertical resize +5<cr>')
   vim.keymap.set('n', '<', '<cmd>vertical resize -5<cr>')
 end
-=======
-vim.cmd 'colorscheme kanagawa-dragon'
->>>>>>> 1c3c1fdb5c213295bf8c8126f050c13cedc40d0f

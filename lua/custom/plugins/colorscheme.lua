@@ -3,20 +3,15 @@ return { -- You can easily change to a different colorscheme.
   -- change the command in the config to whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  'rebelot/kanagawa.nvim',
+  'sainnhe/gruvbox-material',
   priority = 1000,
   lazy = false,
-  opts = {
-    transparent = true,
-    theme = 'dragon',
-    colors = {
-      theme = {
-        all = {
-          ui = {
-            bg_gutter = 'none',
-          },
-        },
-      },
-    },
-  },
+  config = function()
+    -- Optionally configure and load the colorscheme
+    -- directly inside the plugin declaration.
+    vim.g.gruvbox_material_enable_italic = true
+    vim.g.gruvbox_material_transparent_background = 1
+    vim.cmd.colorscheme 'gruvbox-material'
+  end,
+  opts = {},
 }
